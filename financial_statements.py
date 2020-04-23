@@ -1,6 +1,7 @@
 from urllib.request import urlopen
 import json
 import pandas as pd
+from . import finformat as ff
 
 
 def income_statement(ticker, period="annual"):
@@ -35,8 +36,8 @@ def income_statement(ticker, period="annual"):
             date = data['date'][:4]
         del data['date']
         data_formatted[date] = data
-
-    return pd.DataFrame(data_formatted)
+    df = pd.DataFrame(data_formatted)
+    return ff.currency_format(df)
 
 
 def balance_sheet_statement(ticker, period="annual"):
@@ -71,8 +72,9 @@ def balance_sheet_statement(ticker, period="annual"):
             date = data['date'][:4]
         del data['date']
         data_formatted[date] = data
+    df = pd.DataFrame(data_formatted)
+    return ff.currency_format(df)
 
-    return pd.DataFrame(data_formatted)
 
 
 def cash_flow_statement(ticker, period="annual"):
@@ -107,5 +109,5 @@ def cash_flow_statement(ticker, period="annual"):
             date = data['date'][:4]
         del data['date']
         data_formatted[date] = data
-
-    return pd.DataFrame(data_formatted)
+    df = pd.DataFrame(data_formatted)
+    return ff.currency_format(df)
